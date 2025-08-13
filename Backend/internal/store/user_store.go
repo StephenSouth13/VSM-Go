@@ -4,7 +4,7 @@ package store
 
 import (
 	"gorm.io/gorm"
-	"vsm-go/internal/types"
+	"vsm-go/Backend/internal/types"
 )
 
 // UserStore chịu trách nhiệm cho tất cả các tương tác với bảng 'users' trong database.

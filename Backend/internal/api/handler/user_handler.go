@@ -5,9 +5,10 @@ package handler
 import (
 	"net/http"
 
+	"vsm-go/Backend/internal/core"
+	"vsm-go/Backend/internal/types"
+
 	"github.com/gin-gonic/gin"
-	"vsm-go/internal/core"
-	"vsm-go/internal/types"
 )
 
 // UserHandler chịu trách nhiệm xử lý các request HTTP liên quan đến người dùng.

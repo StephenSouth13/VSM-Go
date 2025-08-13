@@ -12,10 +12,10 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
-	"vsm-go/internal/api"
-	"vsm-go/internal/api/handler"
-	"vsm-go/internal/core"
-	"vsm-go/internal/store"
+	"vsm-go/Backend/internal/api"
+	"vsm-go/Backend/internal/api/handler"
+	"vsm-go/Backend/internal/core"
+	"vsm-go/Backend/internal/store"
 )
 
 func main() {

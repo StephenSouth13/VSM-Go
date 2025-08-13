@@ -5,9 +5,9 @@ package core
 import (
 	"errors"
 
-	"vsm-go/internal/store"
-	"vsm-go/internal/types"
-	"vsm-go/internal/utils"
+	"vsm-go/Backend/internal/store"
+	"vsm-go/Backend/internal/types"
+	"vsm-go/Backend/internal/utils"
 )
 
 // UserService chứa các logic nghiệp vụ liên quan đến người dùng.

@@ -4,7 +4,7 @@ Tôi là ai? "Tôi là file user_store.go, và tôi thuộc về 'tập hồ sơ
 import ( ... )
 Tôi cần gì? "Để làm việc, tôi cần hai thứ:"
 "gorm.io/gorm": "Tôi cần thư viện GORM để biết cách nói chuyện với database."
-"vsm-go/internal/types": "Tôi cần 'bản thiết kế' của User từ gói types mà chúng ta vừa tạo để biết một người dùng trông như thế nào."
+"vsm-go/Backend/internal/types": "Tôi cần 'bản thiết kế' của User từ gói types mà chúng ta vừa tạo để biết một người dùng trông như thế nào."
 Lưu ý: vsm-go là tên module bạn đã đặt trong file go.mod.
 type UserStore struct { db *gorm.DB }
 Cấu trúc của tôi là gì? "Tôi định nghĩa một 'kiểu' mới tên là UserStore. Bên trong nó, có một 'ngăn kéo' tên là db. Ngăn kéo này chứa 'chìa khóa' để vào database (chính là đối tượng kết nối *gorm.DB)."
