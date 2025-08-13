@@ -9,7 +9,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Welcome NguyenDung0101!</Text>
+      <Text>Welcome VSM GO APP</Text>
     </View>
   );
 }
