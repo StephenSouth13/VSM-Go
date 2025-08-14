@@ -67,38 +67,48 @@ export default function WelcomeScreen() {
                     colors={[VSMStyles.colors.white, '#F0F9FF']}
                     style={styles.logoGradient}
                   >
-                    <Ionicons name="flash" size={56} color={VSMStyles.colors.primary} />
+                    <Text style={styles.logoText}>VSM</Text>
                   </LinearGradient>
                 </View>
                 <Text style={styles.appName}>{t.appName}</Text>
                 <Text style={styles.tagline}>{t.tagline}</Text>
               </View>
 
-              {/* Features Preview */}
+              {/* VSM Features Preview */}
               <View style={styles.featuresSection}>
                 <View style={styles.featureItem}>
                   <View style={styles.featureIcon}>
-                    <Ionicons name="trophy" size={24} color={VSMStyles.colors.gold} />
+                    <Ionicons name="school" size={24} color={VSMStyles.colors.gold} />
                   </View>
-                  <Text style={styles.featureText}>1000+ Giải đua</Text>
+                  <Text style={styles.featureText}>50+ Trường ĐH/CĐ</Text>
                 </View>
                 <View style={styles.featureItem}>
                   <View style={styles.featureIcon}>
                     <Ionicons name="people" size={24} color={VSMStyles.colors.white} />
                   </View>
-                  <Text style={styles.featureText}>50k+ Runner</Text>
+                  <Text style={styles.featureText}>10k+ Sinh viên</Text>
                 </View>
                 <View style={styles.featureItem}>
                   <View style={styles.featureIcon}>
-                    <Ionicons name="location" size={24} color={VSMStyles.colors.secondary} />
+                    <Ionicons name="trophy" size={24} color={VSMStyles.colors.secondary} />
                   </View>
-                  <Text style={styles.featureText}>63 Tỉnh thành</Text>
+                  <Text style={styles.featureText}>Cộng đồng lớn nhất</Text>
                 </View>
               </View>
 
               {/* Description */}
               <View style={styles.descriptionSection}>
                 <Text style={styles.description}>{t.welcomeDescription}</Text>
+              </View>
+
+              {/* VSM 2025 Highlight */}
+              <View style={styles.eventHighlight}>
+                <View style={styles.eventBadge}>
+                  <Ionicons name="calendar" size={16} color={VSMStyles.colors.white} />
+                  <Text style={styles.eventBadgeText}>VSM 2025</Text>
+                </View>
+                <Text style={styles.eventTitle}>28.12.2025 • Sala Urban Area</Text>
+                <Text style={styles.eventSubtitle}>Chạy Vì Tương Lai</Text>
               </View>
 
               {/* Action Buttons */}
@@ -205,8 +215,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     ...VSMStyles.shadows.large,
   },
+  logoText: {
+    fontSize: 48,
+    fontWeight: 'bold',
+    color: VSMStyles.colors.primary,
+  },
   appName: {
-    fontSize: 42,
+    fontSize: 24,
     fontWeight: 'bold',
     color: VSMStyles.colors.white,
     marginBottom: VSMStyles.spacing.sm,
@@ -216,7 +231,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 4,
   },
   tagline: {
-    fontSize: 18,
+    fontSize: 16,
     color: VSMStyles.colors.white,
     textAlign: 'center',
     opacity: 0.9,
@@ -258,6 +273,40 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     opacity: 0.9,
     fontWeight: '400',
+  },
+  eventHighlight: {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    padding: VSMStyles.spacing.lg,
+    borderRadius: VSMStyles.borderRadius.xl,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+  },
+  eventBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: VSMStyles.colors.secondary,
+    paddingHorizontal: VSMStyles.spacing.md,
+    paddingVertical: VSMStyles.spacing.xs,
+    borderRadius: VSMStyles.borderRadius.lg,
+    marginBottom: VSMStyles.spacing.sm,
+  },
+  eventBadgeText: {
+    color: VSMStyles.colors.white,
+    fontSize: 12,
+    fontWeight: '600',
+    marginLeft: VSMStyles.spacing.xs,
+  },
+  eventTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: VSMStyles.colors.white,
+    marginBottom: VSMStyles.spacing.xs,
+  },
+  eventSubtitle: {
+    fontSize: 14,
+    color: VSMStyles.colors.white,
+    opacity: 0.9,
   },
   buttonsSection: {
     gap: VSMStyles.spacing.md,
