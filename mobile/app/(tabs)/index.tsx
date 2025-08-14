@@ -17,6 +17,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { VSMStyles } from '@/constants/VSMStyles';
 import { useLanguage } from '@/hooks/useLanguage';
+import { useAuth } from '@/contexts/AuthContext';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -94,16 +95,6 @@ const pastEvents: PastEvent[] = [
     year: '2023',
     status: 'completed',
   },
-  {
-    id: '5',
-    title: 'Run For Green 2023',
-    titleEn: 'Run For Green 2023',
-    date: '15.10.2023',
-    location: 'Tân Uyên, Bình Dương',
-    participants: '1500+ sinh viên',
-    year: '2023',
-    status: 'completed',
-  },
 ];
 
 const vsmStats = [
@@ -132,6 +123,7 @@ const vsmStats = [
 
 export default function HomeScreen() {
   const { t, language } = useLanguage();
+  const { isAuthenticated, isGuest } = useAuth();
   const [searchText, setSearchText] = useState('');
 
   const handleEventPress = (event: Event) => {
@@ -143,12 +135,27 @@ export default function HomeScreen() {
   };
 
   const handleNotifications = () => {
+    if (!isAuthenticated && !isGuest) {
+      router.push('/login');
+      return;
+    }
     console.log('Navigate to notifications');
   };
 
   const handleRegisterVSM2025 = () => {
+    if (!isAuthenticated && !isGuest) {
+      router.push('/login');
+      return;
+    }
     console.log('Navigate to VSM 2025 registration');
-    // In real app: router.push('https://vsm.org.vn/register');
+  };
+
+  const handleJoinCommunity = () => {
+    if (!isAuthenticated && !isGuest) {
+      router.push('/login');
+      return;
+    }
+    console.log('Navigate to community');
   };
 
   return (
@@ -169,11 +176,25 @@ export default function HomeScreen() {
         </View>
         <TouchableOpacity style={styles.notificationButton} onPress={handleNotifications}>
           <Ionicons name="notifications-outline" size={24} color={VSMStyles.colors.textDark} />
-          <View style={styles.notificationBadge}>
-            <Text style={styles.badgeText}>2</Text>
-          </View>
+          {(isAuthenticated || isGuest) && (
+            <View style={styles.notificationBadge}>
+              <Text style={styles.badgeText}>2</Text>
+            </View>
+          )}
         </TouchableOpacity>
       </View>
+
+      {/* Guest Mode Banner */}
+      {!isAuthenticated && (
+        <View style={styles.guestBanner}>
+          <View style={styles.guestBannerContent}>
+            <Ionicons name="person-outline" size={20} color={VSMStyles.colors.primary} />
+            <Text style={styles.guestBannerText}>
+              Đang ở chế độ khách. <Text style={styles.guestBannerLink} onPress={() => router.push('/login')}>Đăng nhập</Text> để trải nghiệm đầy đủ.
+            </Text>
+          </View>
+        </View>
+      )}
 
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* VSM 2025 Featured Event Hero */}
@@ -221,7 +242,9 @@ export default function HomeScreen() {
                     <Text style={styles.distancesText}>42KM • 21KM • 10KM • 5KM</Text>
                   </View>
                   <TouchableOpacity style={styles.registerButton} onPress={handleRegisterVSM2025}>
-                    <Text style={styles.registerButtonText}>Đăng ký VSM 2025</Text>
+                    <Text style={styles.registerButtonText}>
+                      {isAuthenticated ? 'Đăng ký VSM 2025' : 'Đăng nhập để đăng ký'}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </LinearGradient>
@@ -259,7 +282,7 @@ export default function HomeScreen() {
           </View>
 
           <View style={styles.eventsList}>
-            {pastEvents.map((event) => (
+            {pastEvents.slice(0, 3).map((event) => (
               <TouchableOpacity
                 key={event.id}
                 style={styles.eventCard}
@@ -312,8 +335,10 @@ export default function HomeScreen() {
               <Text style={styles.communityDescription}>
                 Chia sẻ kinh nghiệm, tìm bạn chạy cùng và cập nhật tin tức mới nhất
               </Text>
-              <TouchableOpacity style={styles.joinButton}>
-                <Text style={styles.joinButtonText}>Tham gia ngay</Text>
+              <TouchableOpacity style={styles.joinButton} onPress={handleJoinCommunity}>
+                <Text style={styles.joinButtonText}>
+                  {isAuthenticated ? 'Tham gia ngay' : 'Đăng nhập để tham gia'}
+                </Text>
               </TouchableOpacity>
             </LinearGradient>
           </View>
@@ -376,6 +401,27 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
   },
+  guestBanner: {
+    backgroundColor: '#E3F2FD',
+    borderBottomWidth: 1,
+    borderBottomColor: VSMStyles.colors.borderLight,
+  },
+  guestBannerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: VSMStyles.spacing.lg,
+    paddingVertical: VSMStyles.spacing.sm,
+  },
+  guestBannerText: {
+    marginLeft: VSMStyles.spacing.sm,
+    fontSize: 13,
+    color: VSMStyles.colors.textMedium,
+    flex: 1,
+  },
+  guestBannerLink: {
+    color: VSMStyles.colors.primary,
+    fontWeight: '600',
+  },
   scrollView: {
     flex: 1,
   },
@@ -389,7 +435,7 @@ const styles = StyleSheet.create({
     ...VSMStyles.shadows.large,
   },
   featuredBackground: {
-    height: 280,
+    height: screenWidth < 375 ? 220 : 260,
   },
   featuredImageStyle: {
     borderRadius: VSMStyles.borderRadius.xl,
@@ -416,7 +462,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   featuredTitle: {
-    fontSize: 32,
+    fontSize: screenWidth < 375 ? 24 : 28,
     fontWeight: 'bold',
     color: VSMStyles.colors.white,
     textShadowColor: 'rgba(0, 0, 0, 0.5)',
@@ -424,7 +470,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
   },
   featuredSubtitle: {
-    fontSize: 18,
+    fontSize: screenWidth < 375 ? 14 : 16,
     color: VSMStyles.colors.white,
     opacity: 0.9,
     marginBottom: VSMStyles.spacing.md,
@@ -439,7 +485,7 @@ const styles = StyleSheet.create({
   },
   featuredInfoText: {
     color: VSMStyles.colors.white,
-    fontSize: 14,
+    fontSize: 13,
     marginLeft: VSMStyles.spacing.xs,
     fontWeight: '500',
   },
@@ -448,13 +494,13 @@ const styles = StyleSheet.create({
   },
   distancesTitle: {
     color: VSMStyles.colors.white,
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '600',
     marginBottom: VSMStyles.spacing.xs,
   },
   distancesText: {
     color: VSMStyles.colors.white,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '500',
   },
   registerButton: {
@@ -465,7 +511,7 @@ const styles = StyleSheet.create({
   },
   registerButtonText: {
     color: VSMStyles.colors.primary,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
   },
   statsSection: {
@@ -495,13 +541,13 @@ const styles = StyleSheet.create({
     marginBottom: VSMStyles.spacing.sm,
   },
   statValue: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: VSMStyles.colors.textDark,
     marginBottom: VSMStyles.spacing.xs,
   },
   statLabel: {
-    fontSize: 12,
+    fontSize: 11,
     color: VSMStyles.colors.textMedium,
     textAlign: 'center',
   },
@@ -539,8 +585,8 @@ const styles = StyleSheet.create({
     ...VSMStyles.shadows.small,
   },
   eventImageContainer: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     borderRadius: VSMStyles.borderRadius.default,
     backgroundColor: VSMStyles.colors.background,
     justifyContent: 'center',
@@ -555,7 +601,7 @@ const styles = StyleSheet.create({
   },
   yearText: {
     color: VSMStyles.colors.white,
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: 'bold',
   },
   eventInfo: {
@@ -572,6 +618,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     flex: 1,
     marginRight: VSMStyles.spacing.sm,
+    fontSize: 14,
   },
   completedBadge: {
     flexDirection: 'row',
@@ -582,7 +629,7 @@ const styles = StyleSheet.create({
     borderRadius: VSMStyles.borderRadius.sm,
   },
   completedText: {
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: '600',
     color: VSMStyles.colors.success,
     marginLeft: 4,
@@ -599,9 +646,10 @@ const styles = StyleSheet.create({
     ...VSMStyles.typography.caption,
     marginLeft: VSMStyles.spacing.xs,
     color: VSMStyles.colors.textLight,
+    fontSize: 11,
   },
   participantsText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '600',
     color: VSMStyles.colors.primary,
   },
@@ -619,7 +667,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   communityTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: VSMStyles.colors.white,
     marginTop: VSMStyles.spacing.md,
@@ -642,7 +690,7 @@ const styles = StyleSheet.create({
   },
   joinButtonText: {
     color: VSMStyles.colors.primary,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
   },
   bottomSpacing: {
