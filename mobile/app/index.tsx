@@ -7,6 +7,7 @@ import {
   ImageBackground,
   StatusBar,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -42,6 +43,7 @@ export default function WelcomeScreen() {
         }}
         style={styles.backgroundImage}
         imageStyle={styles.backgroundImageStyle}
+        resizeMode="cover"
       >
         {/* Gradient Overlay */}
         <LinearGradient
@@ -50,16 +52,20 @@ export default function WelcomeScreen() {
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
         >
-          <SafeAreaView style={styles.safeArea}>
+          <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
             {/* Language Toggle */}
             <View style={styles.header}>
               <TouchableOpacity style={styles.languageButton} onPress={toggleLanguage}>
-                <Ionicons name="language" size={20} color={VSMStyles.colors.white} />
+                <Ionicons name="language" size={18} color={VSMStyles.colors.white} />
                 <Text style={styles.languageText}>{language.toUpperCase()}</Text>
               </TouchableOpacity>
             </View>
 
-            <View style={styles.content}>
+            <ScrollView 
+              contentContainerStyle={styles.scrollContent}
+              showsVerticalScrollIndicator={false}
+              bounces={false}
+            >
               {/* Logo Section */}
               <View style={styles.logoSection}>
                 <View style={styles.logoContainer}>
@@ -78,19 +84,19 @@ export default function WelcomeScreen() {
               <View style={styles.featuresSection}>
                 <View style={styles.featureItem}>
                   <View style={styles.featureIcon}>
-                    <Ionicons name="school" size={24} color={VSMStyles.colors.gold} />
+                    <Ionicons name="school" size={20} color={VSMStyles.colors.gold} />
                   </View>
                   <Text style={styles.featureText}>50+ Trường ĐH/CĐ</Text>
                 </View>
                 <View style={styles.featureItem}>
                   <View style={styles.featureIcon}>
-                    <Ionicons name="people" size={24} color={VSMStyles.colors.white} />
+                    <Ionicons name="people" size={20} color={VSMStyles.colors.white} />
                   </View>
                   <Text style={styles.featureText}>10k+ Sinh viên</Text>
                 </View>
                 <View style={styles.featureItem}>
                   <View style={styles.featureIcon}>
-                    <Ionicons name="trophy" size={24} color={VSMStyles.colors.secondary} />
+                    <Ionicons name="trophy" size={20} color={VSMStyles.colors.secondary} />
                   </View>
                   <Text style={styles.featureText}>Cộng đồng lớn nhất</Text>
                 </View>
@@ -104,7 +110,7 @@ export default function WelcomeScreen() {
               {/* VSM 2025 Highlight */}
               <View style={styles.eventHighlight}>
                 <View style={styles.eventBadge}>
-                  <Ionicons name="calendar" size={16} color={VSMStyles.colors.white} />
+                  <Ionicons name="calendar" size={14} color={VSMStyles.colors.white} />
                   <Text style={styles.eventBadgeText}>VSM 2025</Text>
                 </View>
                 <Text style={styles.eventTitle}>28.12.2025 • Sala Urban Area</Text>
@@ -139,7 +145,7 @@ export default function WelcomeScreen() {
                   <Text style={styles.ghostButtonText}>{t.continueAsGuest}</Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </ScrollView>
 
             {/* Decorative Elements */}
             <View style={styles.decorativeElements}>
@@ -160,8 +166,8 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    width: screenWidth,
-    height: screenHeight,
+    width: '100%',
+    height: '100%',
   },
   backgroundImageStyle: {
     resizeMode: 'cover',
@@ -176,164 +182,176 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     paddingHorizontal: VSMStyles.spacing.lg,
-    paddingTop: VSMStyles.spacing.md,
+    paddingTop: VSMStyles.spacing.sm,
+    paddingBottom: VSMStyles.spacing.sm,
   },
   languageButton: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    paddingHorizontal: VSMStyles.spacing.md,
-    paddingVertical: VSMStyles.spacing.sm,
-    borderRadius: VSMStyles.borderRadius.xl,
+    paddingHorizontal: VSMStyles.spacing.sm,
+    paddingVertical: VSMStyles.spacing.xs,
+    borderRadius: VSMStyles.borderRadius.lg,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   languageText: {
     color: VSMStyles.colors.white,
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '600',
     marginLeft: VSMStyles.spacing.xs,
   },
-  content: {
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingHorizontal: VSMStyles.spacing.xl,
-    paddingVertical: VSMStyles.spacing.xxl,
+  scrollContent: {
+    flexGrow: 1,
+    paddingHorizontal: VSMStyles.spacing.lg,
+    paddingVertical: VSMStyles.spacing.md,
+    justifyContent: 'center',
+    minHeight: screenHeight * 0.85,
   },
   logoSection: {
     alignItems: 'center',
-    marginTop: VSMStyles.spacing.xxl,
-  },
-  logoContainer: {
     marginBottom: VSMStyles.spacing.lg,
   },
+  logoContainer: {
+    marginBottom: VSMStyles.spacing.md,
+  },
   logoGradient: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: screenWidth < 375 ? 80 : 100,
+    height: screenWidth < 375 ? 80 : 100,
+    borderRadius: screenWidth < 375 ? 40 : 50,
     justifyContent: 'center',
     alignItems: 'center',
     ...VSMStyles.shadows.large,
   },
   logoText: {
-    fontSize: 48,
+    fontSize: screenWidth < 375 ? 32 : 40,
     fontWeight: 'bold',
     color: VSMStyles.colors.primary,
   },
   appName: {
-    fontSize: 24,
+    fontSize: screenWidth < 375 ? 20 : 24,
     fontWeight: 'bold',
     color: VSMStyles.colors.white,
-    marginBottom: VSMStyles.spacing.sm,
+    marginBottom: VSMStyles.spacing.xs,
     textAlign: 'center',
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 4,
   },
   tagline: {
-    fontSize: 16,
+    fontSize: screenWidth < 375 ? 12 : 14,
     color: VSMStyles.colors.white,
     textAlign: 'center',
     opacity: 0.9,
     fontWeight: '500',
+    paddingHorizontal: VSMStyles.spacing.sm,
   },
   featuresSection: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginVertical: VSMStyles.spacing.xl,
+    marginVertical: VSMStyles.spacing.lg,
+    paddingHorizontal: VSMStyles.spacing.sm,
   },
   featureItem: {
     alignItems: 'center',
+    flex: 1,
+    marginHorizontal: VSMStyles.spacing.xs,
   },
   featureIcon: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: screenWidth < 375 ? 35 : 40,
+    height: screenWidth < 375 ? 35 : 40,
+    borderRadius: screenWidth < 375 ? 17.5 : 20,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: VSMStyles.spacing.sm,
+    marginBottom: VSMStyles.spacing.xs,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   featureText: {
     color: VSMStyles.colors.white,
-    fontSize: 12,
+    fontSize: screenWidth < 375 ? 10 : 11,
     fontWeight: '600',
     textAlign: 'center',
+    lineHeight: 14,
   },
   descriptionSection: {
     alignItems: 'center',
-    paddingHorizontal: VSMStyles.spacing.md,
+    marginVertical: VSMStyles.spacing.lg,
+    paddingHorizontal: VSMStyles.spacing.sm,
   },
   description: {
-    fontSize: 16,
+    fontSize: screenWidth < 375 ? 13 : 14,
     color: VSMStyles.colors.white,
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: screenWidth < 375 ? 18 : 20,
     opacity: 0.9,
     fontWeight: '400',
   },
   eventHighlight: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    padding: VSMStyles.spacing.lg,
-    borderRadius: VSMStyles.borderRadius.xl,
+    padding: VSMStyles.spacing.md,
+    borderRadius: VSMStyles.borderRadius.lg,
     alignItems: 'center',
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.2)',
+    marginVertical: VSMStyles.spacing.lg,
   },
   eventBadge: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: VSMStyles.colors.secondary,
-    paddingHorizontal: VSMStyles.spacing.md,
+    paddingHorizontal: VSMStyles.spacing.sm,
     paddingVertical: VSMStyles.spacing.xs,
-    borderRadius: VSMStyles.borderRadius.lg,
-    marginBottom: VSMStyles.spacing.sm,
+    borderRadius: VSMStyles.borderRadius.default,
+    marginBottom: VSMStyles.spacing.xs,
   },
   eventBadgeText: {
     color: VSMStyles.colors.white,
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: '600',
     marginLeft: VSMStyles.spacing.xs,
   },
   eventTitle: {
-    fontSize: 18,
+    fontSize: screenWidth < 375 ? 14 : 16,
     fontWeight: 'bold',
     color: VSMStyles.colors.white,
     marginBottom: VSMStyles.spacing.xs,
+    textAlign: 'center',
   },
   eventSubtitle: {
-    fontSize: 14,
+    fontSize: screenWidth < 375 ? 12 : 13,
     color: VSMStyles.colors.white,
     opacity: 0.9,
+    textAlign: 'center',
   },
   buttonsSection: {
-    gap: VSMStyles.spacing.md,
-    marginBottom: VSMStyles.spacing.lg,
+    gap: VSMStyles.spacing.sm,
+    marginTop: VSMStyles.spacing.lg,
+    paddingHorizontal: VSMStyles.spacing.xs,
   },
   primaryButton: {
-    borderRadius: VSMStyles.borderRadius.lg,
+    borderRadius: VSMStyles.borderRadius.default,
     overflow: 'hidden',
     ...VSMStyles.shadows.medium,
   },
   secondaryButton: {
-    borderRadius: VSMStyles.borderRadius.lg,
+    borderRadius: VSMStyles.borderRadius.default,
     overflow: 'hidden',
     ...VSMStyles.shadows.medium,
   },
   buttonGradient: {
-    paddingVertical: VSMStyles.spacing.md + 2,
+    paddingVertical: VSMStyles.spacing.md,
     alignItems: 'center',
   },
   primaryButtonText: {
     color: VSMStyles.colors.white,
-    fontSize: 18,
+    fontSize: screenWidth < 375 ? 14 : 16,
     fontWeight: '600',
   },
   secondaryButtonText: {
     color: VSMStyles.colors.white,
-    fontSize: 18,
+    fontSize: screenWidth < 375 ? 14 : 16,
     fontWeight: '600',
   },
   ghostButton: {
@@ -342,11 +360,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)',
-    borderRadius: VSMStyles.borderRadius.lg,
+    borderRadius: VSMStyles.borderRadius.default,
   },
   ghostButtonText: {
     color: VSMStyles.colors.white,
-    fontSize: 16,
+    fontSize: screenWidth < 375 ? 13 : 14,
     fontWeight: '500',
     opacity: 0.9,
   },
@@ -364,20 +382,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.05)',
   },
   circle1: {
-    width: 100,
-    height: 100,
-    top: '15%',
-    right: -50,
-  },
-  circle2: {
     width: 80,
     height: 80,
-    bottom: '25%',
-    left: -40,
+    top: '15%',
+    right: -40,
   },
-  circle3: {
+  circle2: {
     width: 60,
     height: 60,
+    bottom: '25%',
+    left: -30,
+  },
+  circle3: {
+    width: 40,
+    height: 40,
     top: '60%',
     right: '20%',
   },
