@@ -9,93 +9,213 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  StatusBar,
+  Dimensions,
 } from 'react-native';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { VSMStyles } from '@/constants/VSMStyles';
+import { LinearGradient } from 'expo-linear-gradient';
+import { VSMStyles, ButtonStyles } from '@/constants/VSMStyles';
+import { useLanguage } from '@/hooks/useLanguage';
+
+const { width: screenWidth } = Dimensions.get('window');
 
 export default function RegisterScreen() {
+  const { t, toggleLanguage, language } = useLanguage();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
+    if (!agreeToTerms) {
+      // Show terms agreement error
+      return;
+    }
+    
+    setLoading(true);
     // TODO: Implement sign up logic
-    console.log('Sign up with:', { fullName, email, password });
+    setTimeout(() => {
+      setLoading(false);
+      router.replace('/(tabs)');
+    }, 1500);
+  };
+
+  const handleBack = () => {
+    router.back();
   };
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor={VSMStyles.colors.white} />
+      
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+          <Ionicons name="arrow-back" size={24} color={VSMStyles.colors.textDark} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.languageButton} onPress={toggleLanguage}>
+          <Ionicons name="language" size={20} color={VSMStyles.colors.primary} />
+          <Text style={styles.languageText}>{language.toUpperCase()}</Text>
+        </TouchableOpacity>
+      </View>
+
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
       >
-        <ScrollView contentContainerStyle={styles.scrollContent}>
+        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           <View style={styles.content}>
-            <Text style={styles.title}>Create Your Account</Text>
-
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Full Name</Text>
-              <TextInput
-                style={styles.input}
-                value={fullName}
-                onChangeText={setFullName}
-                placeholder="Enter your full name"
-                placeholderTextColor="#999"
-                autoCapitalize="words"
-                returnKeyType="next"
-              />
+            {/* Logo Section */}
+            <View style={styles.logoSection}>
+              <LinearGradient
+                colors={[VSMStyles.colors.secondary, VSMStyles.colors.secondaryLight]}
+                style={styles.logoContainer}
+              >
+                <Ionicons name="flash" size={40} color={VSMStyles.colors.white} />
+              </LinearGradient>
+              <Text style={styles.title}>{t.createAccount}</Text>
+              <Text style={styles.subtitle}>Tham gia cộng đồng runner Việt Nam</Text>
             </View>
 
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Email</Text>
-              <TextInput
-                style={styles.input}
-                value={email}
-                onChangeText={setEmail}
-                placeholder="Enter your email"
-                placeholderTextColor="#999"
-                keyboardType="email-address"
-                autoCapitalize="none"
-                returnKeyType="next"
-              />
-            </View>
-
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Password</Text>
-              <View style={styles.passwordContainer}>
-                <TextInput
-                  style={styles.passwordInput}
-                  value={password}
-                  onChangeText={setPassword}
-                  placeholder="Enter your password"
-                  placeholderTextColor="#999"
-                  secureTextEntry={!showPassword}
-                  returnKeyType="done"
-                />
-                <TouchableOpacity
-                  style={styles.eyeIcon}
-                  onPress={() => setShowPassword(!showPassword)}
-                >
-                  <Ionicons
-                    name={showPassword ? 'eye-off' : 'eye'}
-                    size={20}
-                    color="#666"
+            {/* Form Section */}
+            <View style={styles.formSection}>
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>{t.fullName}</Text>
+                <View style={styles.inputWrapper}>
+                  <Ionicons name="person-outline" size={20} color={VSMStyles.colors.textLight} style={styles.inputIcon} />
+                  <TextInput
+                    style={styles.input}
+                    value={fullName}
+                    onChangeText={setFullName}
+                    placeholder="Nhập họ và tên"
+                    placeholderTextColor={VSMStyles.colors.textLight}
+                    autoCapitalize="words"
+                    returnKeyType="next"
                   />
-                </TouchableOpacity>
+                </View>
+              </View>
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>{t.email}</Text>
+                <View style={styles.inputWrapper}>
+                  <Ionicons name="mail-outline" size={20} color={VSMStyles.colors.textLight} style={styles.inputIcon} />
+                  <TextInput
+                    style={styles.input}
+                    value={email}
+                    onChangeText={setEmail}
+                    placeholder="Nhập email của bạn"
+                    placeholderTextColor={VSMStyles.colors.textLight}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    returnKeyType="next"
+                  />
+                </View>
+              </View>
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>{t.password}</Text>
+                <View style={styles.inputWrapper}>
+                  <Ionicons name="lock-closed-outline" size={20} color={VSMStyles.colors.textLight} style={styles.inputIcon} />
+                  <TextInput
+                    style={styles.input}
+                    value={password}
+                    onChangeText={setPassword}
+                    placeholder="Tạo mật khẩu mạnh"
+                    placeholderTextColor={VSMStyles.colors.textLight}
+                    secureTextEntry={!showPassword}
+                    returnKeyType="done"
+                    onSubmitEditing={handleSignUp}
+                  />
+                  <TouchableOpacity
+                    style={styles.eyeIcon}
+                    onPress={() => setShowPassword(!showPassword)}
+                  >
+                    <Ionicons
+                      name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                      size={20}
+                      color={VSMStyles.colors.textLight}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              {/* Password Requirements */}
+              <View style={styles.passwordRequirements}>
+                <Text style={styles.requirementText}>• Ít nhất 8 ký tự</Text>
+                <Text style={styles.requirementText}>• Bao gồm chữ hoa và chữ thường</Text>
+                <Text style={styles.requirementText}>• Có ít nhất 1 số</Text>
+              </View>
+
+              {/* Terms Agreement */}
+              <TouchableOpacity
+                style={styles.termsContainer}
+                onPress={() => setAgreeToTerms(!agreeToTerms)}
+              >
+                <View style={[styles.checkbox, agreeToTerms && styles.checkboxActive]}>
+                  {agreeToTerms && (
+                    <Ionicons name="checkmark" size={16} color={VSMStyles.colors.white} />
+                  )}
+                </View>
+                <Text style={styles.termsText}>
+                  Tôi đồng ý với{' '}
+                  <Text style={styles.termsLink}>Điều khoản sử dụng</Text>
+                  {' '}và{' '}
+                  <Text style={styles.termsLink}>Chính sách bảo mật</Text>
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.signUpButton, (!agreeToTerms || loading) && styles.buttonDisabled]}
+                onPress={handleSignUp}
+                disabled={!agreeToTerms || loading}
+              >
+                <LinearGradient
+                  colors={(!agreeToTerms || loading) ? ['#ccc', '#999'] : [VSMStyles.colors.secondary, VSMStyles.colors.secondaryLight]}
+                  style={styles.buttonGradient}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                >
+                  {loading ? (
+                    <View style={styles.loadingContainer}>
+                      <Text style={styles.buttonText}>Đang tạo tài khoản...</Text>
+                    </View>
+                  ) : (
+                    <Text style={styles.buttonText}>{t.signUp}</Text>
+                  )}
+                </LinearGradient>
+              </TouchableOpacity>
+
+              {/* Social Registration */}
+              <View style={styles.socialSection}>
+                <View style={styles.divider}>
+                  <View style={styles.dividerLine} />
+                  <Text style={styles.dividerText}>Hoặc đăng ký bằng</Text>
+                  <View style={styles.dividerLine} />
+                </View>
+
+                <View style={styles.socialButtons}>
+                  <TouchableOpacity style={styles.socialButton}>
+                    <Ionicons name="logo-google" size={24} color="#DB4437" />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.socialButton}>
+                    <Ionicons name="logo-facebook" size={24} color="#4267B2" />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.socialButton}>
+                    <Ionicons name="logo-apple" size={24} color={VSMStyles.colors.textDark} />
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
 
-            <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
-              <Text style={styles.signUpButtonText}>Sign Up</Text>
-            </TouchableOpacity>
-
+            {/* Footer */}
             <View style={styles.footer}>
-              <Text style={styles.footerText}>Already have an account? </Text>
+              <Text style={styles.footerText}>{t.alreadyHaveAccount} </Text>
               <Link href="/login" asChild>
                 <TouchableOpacity>
-                  <Text style={styles.linkText}>Log In</Text>
+                  <Text style={styles.linkText}>{t.logIn}</Text>
                 </TouchableOpacity>
               </Link>
             </View>
@@ -111,84 +231,210 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: VSMStyles.colors.white,
   },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: VSMStyles.spacing.lg,
+    paddingVertical: VSMStyles.spacing.md,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: VSMStyles.colors.background,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  languageButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: VSMStyles.colors.background,
+    paddingHorizontal: VSMStyles.spacing.md,
+    paddingVertical: VSMStyles.spacing.sm,
+    borderRadius: VSMStyles.borderRadius.lg,
+    borderWidth: 1,
+    borderColor: VSMStyles.colors.borderLight,
+  },
+  languageText: {
+    color: VSMStyles.colors.primary,
+    fontSize: 14,
+    fontWeight: '600',
+    marginLeft: VSMStyles.spacing.xs,
+  },
   keyboardView: {
     flex: 1,
   },
   scrollContent: {
     flexGrow: 1,
-    justifyContent: 'center',
   },
   content: {
     flex: 1,
-    paddingHorizontal: VSMStyles.spacing.lg,
+    paddingHorizontal: VSMStyles.spacing.xl,
+    justifyContent: 'space-between',
+    minHeight: '90%',
+  },
+  logoSection: {
+    alignItems: 'center',
+    marginTop: VSMStyles.spacing.lg,
+    marginBottom: VSMStyles.spacing.xl,
+  },
+  logoContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     justifyContent: 'center',
-    minHeight: '80%',
+    alignItems: 'center',
+    marginBottom: VSMStyles.spacing.lg,
+    ...VSMStyles.shadows.medium,
   },
   title: {
     ...VSMStyles.typography.title,
     textAlign: 'center',
-    marginBottom: VSMStyles.spacing.xl * 2,
+    marginBottom: VSMStyles.spacing.sm,
+  },
+  subtitle: {
+    ...VSMStyles.typography.bodySmall,
+    textAlign: 'center',
+    color: VSMStyles.colors.textMedium,
+  },
+  formSection: {
+    flex: 1,
   },
   inputContainer: {
-    marginBottom: VSMStyles.spacing.lg,
+    marginBottom: VSMStyles.spacing.md,
   },
   label: {
-    ...VSMStyles.typography.body,
-    fontWeight: '500',
+    ...VSMStyles.typography.bodySmall,
+    fontWeight: '600',
     marginBottom: VSMStyles.spacing.sm,
     color: VSMStyles.colors.textDark,
   },
-  input: {
-    borderWidth: 1,
-    borderColor: VSMStyles.colors.borderLight,
-    borderRadius: VSMStyles.borderRadius.default,
-    paddingHorizontal: VSMStyles.spacing.md,
-    paddingVertical: VSMStyles.spacing.md,
-    fontSize: 16,
-    color: VSMStyles.colors.textDark,
-    backgroundColor: VSMStyles.colors.white,
-  },
-  passwordContainer: {
+  inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: VSMStyles.colors.borderLight,
-    borderRadius: VSMStyles.borderRadius.default,
-    backgroundColor: VSMStyles.colors.white,
-  },
-  passwordInput: {
-    flex: 1,
+    borderRadius: VSMStyles.borderRadius.lg,
+    backgroundColor: VSMStyles.colors.background,
     paddingHorizontal: VSMStyles.spacing.md,
+  },
+  inputIcon: {
+    marginRight: VSMStyles.spacing.sm,
+  },
+  input: {
+    flex: 1,
     paddingVertical: VSMStyles.spacing.md,
     fontSize: 16,
     color: VSMStyles.colors.textDark,
   },
   eyeIcon: {
-    paddingHorizontal: VSMStyles.spacing.md,
-    paddingVertical: VSMStyles.spacing.md,
+    padding: VSMStyles.spacing.sm,
+  },
+  passwordRequirements: {
+    marginBottom: VSMStyles.spacing.lg,
+    paddingHorizontal: VSMStyles.spacing.sm,
+  },
+  requirementText: {
+    ...VSMStyles.typography.caption,
+    color: VSMStyles.colors.textLight,
+    marginBottom: 2,
+  },
+  termsContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: VSMStyles.spacing.xl,
+  },
+  checkbox: {
+    width: 20,
+    height: 20,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: VSMStyles.colors.borderLight,
+    marginRight: VSMStyles.spacing.sm,
+    marginTop: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  checkboxActive: {
+    backgroundColor: VSMStyles.colors.primary,
+    borderColor: VSMStyles.colors.primary,
+  },
+  termsText: {
+    ...VSMStyles.typography.bodySmall,
+    color: VSMStyles.colors.textMedium,
+    flex: 1,
+    lineHeight: 20,
+  },
+  termsLink: {
+    color: VSMStyles.colors.primary,
+    fontWeight: '600',
   },
   signUpButton: {
-    backgroundColor: VSMStyles.colors.primary,
-    borderRadius: VSMStyles.borderRadius.default,
-    paddingVertical: VSMStyles.spacing.md + 2,
-    marginTop: VSMStyles.spacing.lg,
+    borderRadius: VSMStyles.borderRadius.lg,
+    overflow: 'hidden',
     marginBottom: VSMStyles.spacing.xl,
-    ...VSMStyles.shadows.small,
+    ...VSMStyles.shadows.medium,
   },
-  signUpButtonText: {
+  buttonDisabled: {
+    opacity: 0.7,
+  },
+  buttonGradient: {
+    paddingVertical: VSMStyles.spacing.md + 2,
+    alignItems: 'center',
+  },
+  buttonText: {
     color: VSMStyles.colors.white,
     fontSize: 18,
     fontWeight: '600',
-    textAlign: 'center',
+  },
+  loadingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  socialSection: {
+    marginBottom: VSMStyles.spacing.lg,
+  },
+  divider: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: VSMStyles.spacing.lg,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: VSMStyles.colors.borderLight,
+  },
+  dividerText: {
+    ...VSMStyles.typography.caption,
+    marginHorizontal: VSMStyles.spacing.md,
+    color: VSMStyles.colors.textLight,
+  },
+  socialButtons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: VSMStyles.spacing.lg,
+  },
+  socialButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: VSMStyles.colors.background,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: VSMStyles.colors.borderLight,
+    ...VSMStyles.shadows.small,
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: VSMStyles.spacing.lg,
   },
   footerText: {
     ...VSMStyles.typography.body,
-    color: '#666',
+    color: VSMStyles.colors.textMedium,
   },
   linkText: {
     ...VSMStyles.typography.body,
