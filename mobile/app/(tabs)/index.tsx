@@ -32,102 +32,101 @@ interface Event {
   featured?: boolean;
   price: string;
   participants: string;
+  distances: string[];
 }
 
-interface Challenge {
+interface PastEvent {
   id: string;
   title: string;
   titleEn: string;
-  description: string;
-  descriptionEn: string;
-  image: string;
-  color: string;
-  icon: string;
+  date: string;
+  location: string;
+  participants: string;
+  year: string;
+  status: 'completed';
 }
 
+// Real VSM 2025 event from vsm.org.vn
 const featuredEvent: Event = {
   id: '1',
-  title: 'BÌNH PHƯỚC MARATHON',
-  titleEn: 'BINH PHUOC MARATHON',
-  date: '26.11.2024',
-  location: 'Bình Phước',
-  locationEn: 'Binh Phuoc',
+  title: 'Vietnam Student Marathon 2025 – Chạy Vì Tương Lai',
+  titleEn: 'Vietnam Student Marathon 2025 – Run For The Future',
+  date: '28.12.2025',
+  location: 'Sala Urban Area, Thủ Đức, TP.HCM',
+  locationEn: 'Sala Urban Area, Thu Duc City, Ho Chi Minh City',
   image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=200&fit=crop',
-  category: 'Marathon',
+  category: 'Student Marathon',
   featured: true,
-  price: '₫350,000',
-  participants: '3000+',
+  price: 'Đăng ký sớm',
+  participants: '5000+ sinh viên',
+  distances: ['42KM - Marathon', '21KM - Half Marathon', '10KM - Nâng cao', '5KM - Khởi đầu'],
 };
 
-const upcomingEvents: Event[] = [
+// Real past VSM events from vsm.org.vn
+const pastEvents: PastEvent[] = [
   {
     id: '2',
-    title: 'Hồ Chí Minh City Marathon',
-    titleEn: 'Ho Chi Minh City Marathon',
-    date: '15.12.2024',
-    location: 'TP. Hồ Chí Minh',
-    locationEn: 'Ho Chi Minh City',
-    image: 'https://images.unsplash.com/photo-1544537651-6add72a38e73?w=120&h=80&fit=crop',
-    category: 'Marathon',
-    price: '₫500,000',
-    participants: '5000+',
+    title: 'VSM 2024 – Run To Lampas',
+    titleEn: 'VSM 2024 – Run To Lampas',
+    date: '22.12.2024',
+    location: 'Lampas Island',
+    participants: '3000+ sinh viên',
+    year: '2024',
+    status: 'completed',
   },
   {
     id: '3',
-    title: 'Đà Nẵng Beach Run',
-    titleEn: 'Da Nang Beach Run',
-    date: '20.01.2025',
-    location: 'Đà Nẵng',
-    locationEn: 'Da Nang',
-    image: 'https://images.unsplash.com/photo-1573052905904-34ad8c27f0cc?w=120&h=80&fit=crop',
-    category: 'Fun Run',
-    price: '₫200,000',
-    participants: '2000+',
+    title: 'VSM 2024 Kick-off',
+    titleEn: 'VSM 2024 Kick-off',
+    date: '31.03.2024',
+    location: 'TP. Hồ Chí Minh',
+    participants: '2500+ sinh viên',
+    year: '2024',
+    status: 'completed',
   },
   {
     id: '4',
-    title: 'Hà Nội Heritage Run',
-    titleEn: 'Hanoi Heritage Run',
-    date: '10.02.2025',
-    location: 'Hà Nội',
-    locationEn: 'Hanoi',
-    image: 'https://images.unsplash.com/photo-1502224562085-639556652f33?w=120&h=80&fit=crop',
-    category: 'Half Marathon',
-    price: '₫300,000',
-    participants: '4000+',
+    title: 'VSM 2023 Finals',
+    titleEn: 'VSM 2023 Finals',
+    date: '24.12.2023',
+    location: 'TP. Hồ Chí Minh',
+    participants: '4000+ sinh viên',
+    year: '2023',
+    status: 'completed',
+  },
+  {
+    id: '5',
+    title: 'Run For Green 2023',
+    titleEn: 'Run For Green 2023',
+    date: '15.10.2023',
+    location: 'Tân Uyên, Bình Dương',
+    participants: '1500+ sinh viên',
+    year: '2023',
+    status: 'completed',
   },
 ];
 
-const challenges: Challenge[] = [
+const vsmStats = [
   {
     id: '1',
-    title: 'Thử thách 12 Con Giáp',
-    titleEn: '12 Zodiac Challenge',
-    description: 'Hoàn thành 12 giải chạy theo 12 con giáp',
-    descriptionEn: 'Complete 12 races based on zodiac animals',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=150&fit=crop',
-    color: '#FF6B35',
-    icon: 'star',
+    title: '50+',
+    subtitle: 'Trường ĐH/CĐ',
+    icon: 'school',
+    color: '#4ECDC4',
   },
   {
     id: '2',
-    title: 'Hành trình Xuyên Việt',
-    titleEn: 'Vietnam Journey',
-    description: 'Khám phá 63 tỉnh thành qua các giải chạy',
-    descriptionEn: 'Explore 63 provinces through races',
-    image: 'https://images.unsplash.com/photo-1587213811864-677dc3d6ac4e?w=300&h=150&fit=crop',
-    color: '#4ECDC4',
-    icon: 'map',
+    title: '10,000+',
+    subtitle: 'Sinh viên tham gia',
+    icon: 'people',
+    color: '#FF6B35',
   },
   {
     id: '3',
-    title: 'Chiến binh 12 Con Giáp',
-    titleEn: '12 Zodiac Warriors',
-    description: 'Thử thách sức bền với 12 cự ly khác nhau',
-    descriptionEn: 'Endurance challenge with 12 different distances',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=150&fit=crop',
+    title: '2023',
+    subtitle: 'Năm thành lập',
+    icon: 'calendar',
     color: '#45B7D1',
-    icon: 'shield',
   },
 ];
 
@@ -143,12 +142,13 @@ export default function HomeScreen() {
     console.log('Navigate to all events');
   };
 
-  const handleChallengePress = (challenge: Challenge) => {
-    console.log('Navigate to challenge:', challenge.id);
-  };
-
   const handleNotifications = () => {
     console.log('Navigate to notifications');
+  };
+
+  const handleRegisterVSM2025 = () => {
+    console.log('Navigate to VSM 2025 registration');
+    // In real app: router.push('https://vsm.org.vn/register');
   };
 
   return (
@@ -161,7 +161,7 @@ export default function HomeScreen() {
           <Ionicons name="search" size={20} color={VSMStyles.colors.textLight} />
           <TextInput
             style={styles.searchInput}
-            placeholder={language === 'vi' ? 'Tìm kiếm giải đua...' : 'Search races...'}
+            placeholder={language === 'vi' ? 'Tìm kiếm sự kiện VSM...' : 'Search VSM events...'}
             value={searchText}
             onChangeText={setSearchText}
             placeholderTextColor={VSMStyles.colors.textLight}
@@ -170,13 +170,13 @@ export default function HomeScreen() {
         <TouchableOpacity style={styles.notificationButton} onPress={handleNotifications}>
           <Ionicons name="notifications-outline" size={24} color={VSMStyles.colors.textDark} />
           <View style={styles.notificationBadge}>
-            <Text style={styles.badgeText}>3</Text>
+            <Text style={styles.badgeText}>2</Text>
           </View>
         </TouchableOpacity>
       </View>
 
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {/* Featured Event Hero */}
+        {/* VSM 2025 Featured Event Hero */}
         <View style={styles.heroSection}>
           <TouchableOpacity
             style={styles.featuredCard}
@@ -189,17 +189,20 @@ export default function HomeScreen() {
               imageStyle={styles.featuredImageStyle}
             >
               <LinearGradient
-                colors={['rgba(30, 64, 175, 0.7)', 'rgba(220, 38, 38, 0.8)']}
+                colors={['rgba(30, 64, 175, 0.8)', 'rgba(220, 38, 38, 0.7)']}
                 style={styles.featuredOverlay}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
               >
                 <View style={styles.featuredContent}>
                   <View style={styles.featuredBadge}>
-                    <Text style={styles.featuredBadgeText}>Giải chạy nổi bật</Text>
+                    <Text style={styles.featuredBadgeText}>Sự kiện chính</Text>
                   </View>
                   <Text style={styles.featuredTitle}>
-                    {language === 'vi' ? featuredEvent.title : featuredEvent.titleEn}
+                    {language === 'vi' ? 'VSM 2025' : 'VSM 2025'}
+                  </Text>
+                  <Text style={styles.featuredSubtitle}>
+                    {language === 'vi' ? 'Chạy Vì Tương Lai' : 'Run For The Future'}
                   </Text>
                   <View style={styles.featuredInfo}>
                     <View style={styles.featuredInfoItem}>
@@ -209,93 +212,73 @@ export default function HomeScreen() {
                     <View style={styles.featuredInfoItem}>
                       <Ionicons name="location-outline" size={16} color={VSMStyles.colors.white} />
                       <Text style={styles.featuredInfoText}>
-                        {language === 'vi' ? featuredEvent.location : featuredEvent.locationEn}
+                        {language === 'vi' ? 'Sala Urban Area, Thủ Đức' : 'Sala Urban Area, Thu Duc'}
                       </Text>
                     </View>
                   </View>
-                  <View style={styles.featuredStats}>
-                    <View style={styles.statItem}>
-                      <Text style={styles.statValue}>{featuredEvent.participants}</Text>
-                      <Text style={styles.statLabel}>Người tham gia</Text>
-                    </View>
-                    <View style={styles.statItem}>
-                      <Text style={styles.statValue}>{featuredEvent.price}</Text>
-                      <Text style={styles.statLabel}>Phí tham gia</Text>
-                    </View>
+                  <View style={styles.distancesContainer}>
+                    <Text style={styles.distancesTitle}>Cự ly:</Text>
+                    <Text style={styles.distancesText}>42KM • 21KM • 10KM • 5KM</Text>
                   </View>
+                  <TouchableOpacity style={styles.registerButton} onPress={handleRegisterVSM2025}>
+                    <Text style={styles.registerButtonText}>Đăng ký VSM 2025</Text>
+                  </TouchableOpacity>
                 </View>
               </LinearGradient>
             </ImageBackground>
           </TouchableOpacity>
         </View>
 
-        {/* Themed Challenges Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Bộ thử thách theo chủ đề</Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.challengesContainer}
-          >
-            {challenges.map((challenge) => (
-              <TouchableOpacity
-                key={challenge.id}
-                style={styles.challengeCard}
-                onPress={() => handleChallengePress(challenge)}
-                activeOpacity={0.8}
-              >
-                <ImageBackground
-                  source={{ uri: challenge.image }}
-                  style={styles.challengeImage}
-                  imageStyle={styles.challengeImageStyle}
-                >
-                  <LinearGradient
-                    colors={[`${challenge.color}CC`, `${challenge.color}99`]}
-                    style={styles.challengeOverlay}
-                  >
-                    <View style={styles.challengeContent}>
-                      <View style={styles.challengeIcon}>
-                        <Ionicons name={challenge.icon as any} size={24} color={VSMStyles.colors.white} />
-                      </View>
-                      <Text style={styles.challengeTitle}>
-                        {language === 'vi' ? challenge.title : challenge.titleEn}
-                      </Text>
-                      <Text style={styles.challengeDescription}>
-                        {language === 'vi' ? challenge.description : challenge.descriptionEn}
-                      </Text>
-                    </View>
-                  </LinearGradient>
-                </ImageBackground>
-              </TouchableOpacity>
+        {/* VSM Statistics */}
+        <View style={styles.statsSection}>
+          <Text style={styles.sectionTitle}>Về Vietnam Student Marathon</Text>
+          <View style={styles.statsContainer}>
+            {vsmStats.map((stat) => (
+              <View key={stat.id} style={styles.statCard}>
+                <View style={[styles.statIcon, { backgroundColor: stat.color }]}>
+                  <Ionicons name={stat.icon as any} size={24} color={VSMStyles.colors.white} />
+                </View>
+                <Text style={styles.statValue}>{stat.title}</Text>
+                <Text style={styles.statLabel}>{stat.subtitle}</Text>
+              </View>
             ))}
-          </ScrollView>
+          </View>
+          <Text style={styles.vsmDescription}>
+            VSM là cộng đồng chạy bộ sinh viên lớn nhất Việt Nam, thành lập từ năm 2023 
+            với mục tiêu thúc đẩy tinh thần thể thao và kết nối sinh viên toàn quốc.
+          </Text>
         </View>
 
-        {/* Upcoming Events Section */}
+        {/* Past Events Section */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Giải đua sắp tới</Text>
+            <Text style={styles.sectionTitle}>Sự kiện đã diễn ra</Text>
             <TouchableOpacity onPress={handleSeeAllEvents}>
               <Text style={styles.seeAllText}>Xem tất cả</Text>
             </TouchableOpacity>
           </View>
 
           <View style={styles.eventsList}>
-            {upcomingEvents.map((event) => (
+            {pastEvents.map((event) => (
               <TouchableOpacity
                 key={event.id}
                 style={styles.eventCard}
-                onPress={() => handleEventPress(event)}
+                onPress={() => console.log('View past event:', event.id)}
                 activeOpacity={0.7}
               >
-                <Image source={{ uri: event.image }} style={styles.eventImage} />
+                <View style={styles.eventImageContainer}>
+                  <View style={styles.yearBadge}>
+                    <Text style={styles.yearText}>{event.year}</Text>
+                  </View>
+                </View>
                 <View style={styles.eventInfo}>
                   <View style={styles.eventHeader}>
                     <Text style={styles.eventTitle}>
                       {language === 'vi' ? event.title : event.titleEn}
                     </Text>
-                    <View style={styles.categoryBadge}>
-                      <Text style={styles.categoryText}>{event.category}</Text>
+                    <View style={styles.completedBadge}>
+                      <Ionicons name="checkmark-circle" size={16} color={VSMStyles.colors.success} />
+                      <Text style={styles.completedText}>Hoàn thành</Text>
                     </View>
                   </View>
                   <View style={styles.eventDetails}>
@@ -305,19 +288,34 @@ export default function HomeScreen() {
                     </View>
                     <View style={styles.eventDetailItem}>
                       <Ionicons name="location-outline" size={14} color={VSMStyles.colors.textLight} />
-                      <Text style={styles.eventDetailText}>
-                        {language === 'vi' ? event.location : event.locationEn}
-                      </Text>
+                      <Text style={styles.eventDetailText}>{event.location}</Text>
                     </View>
                   </View>
-                  <View style={styles.eventFooter}>
-                    <Text style={styles.eventPrice}>{event.price}</Text>
-                    <Text style={styles.eventParticipants}>{event.participants} tham gia</Text>
-                  </View>
+                  <Text style={styles.participantsText}>{event.participants}</Text>
                 </View>
                 <Ionicons name="chevron-forward" size={20} color={VSMStyles.colors.borderLight} />
               </TouchableOpacity>
             ))}
+          </View>
+        </View>
+
+        {/* Community Section */}
+        <View style={styles.communitySection}>
+          <Text style={styles.sectionTitle}>Tham gia cộng đồng VSM</Text>
+          <View style={styles.communityCard}>
+            <LinearGradient
+              colors={[VSMStyles.colors.primary, VSMStyles.colors.primaryLight]}
+              style={styles.communityGradient}
+            >
+              <Ionicons name="people" size={32} color={VSMStyles.colors.white} />
+              <Text style={styles.communityTitle}>Kết nối với 10,000+ sinh viên</Text>
+              <Text style={styles.communityDescription}>
+                Chia sẻ kinh nghiệm, tìm bạn chạy cùng và cập nhật tin tức mới nhất
+              </Text>
+              <TouchableOpacity style={styles.joinButton}>
+                <Text style={styles.joinButtonText}>Tham gia ngay</Text>
+              </TouchableOpacity>
+            </LinearGradient>
           </View>
         </View>
 
@@ -391,7 +389,7 @@ const styles = StyleSheet.create({
     ...VSMStyles.shadows.large,
   },
   featuredBackground: {
-    height: 240,
+    height: 280,
   },
   featuredImageStyle: {
     borderRadius: VSMStyles.borderRadius.xl,
@@ -418,13 +416,18 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   featuredTitle: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
     color: VSMStyles.colors.white,
     textShadowColor: 'rgba(0, 0, 0, 0.5)',
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 3,
-    marginVertical: VSMStyles.spacing.md,
+  },
+  featuredSubtitle: {
+    fontSize: 18,
+    color: VSMStyles.colors.white,
+    opacity: 0.9,
+    marginBottom: VSMStyles.spacing.md,
   },
   featuredInfo: {
     marginBottom: VSMStyles.spacing.md,
@@ -440,22 +443,73 @@ const styles = StyleSheet.create({
     marginLeft: VSMStyles.spacing.xs,
     fontWeight: '500',
   },
-  featuredStats: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  distancesContainer: {
+    marginBottom: VSMStyles.spacing.lg,
   },
-  statItem: {
+  distancesTitle: {
+    color: VSMStyles.colors.white,
+    fontSize: 14,
+    fontWeight: '600',
+    marginBottom: VSMStyles.spacing.xs,
+  },
+  distancesText: {
+    color: VSMStyles.colors.white,
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  registerButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    paddingVertical: VSMStyles.spacing.md,
+    borderRadius: VSMStyles.borderRadius.lg,
     alignItems: 'center',
   },
-  statValue: {
-    color: VSMStyles.colors.white,
+  registerButtonText: {
+    color: VSMStyles.colors.primary,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  statsSection: {
+    paddingHorizontal: VSMStyles.spacing.lg,
+    paddingTop: VSMStyles.spacing.xl,
+  },
+  sectionTitle: {
+    ...VSMStyles.typography.heading,
     fontSize: 18,
+    marginBottom: VSMStyles.spacing.lg,
+  },
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: VSMStyles.spacing.lg,
+  },
+  statCard: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  statIcon: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: VSMStyles.spacing.sm,
+  },
+  statValue: {
+    fontSize: 20,
     fontWeight: 'bold',
+    color: VSMStyles.colors.textDark,
+    marginBottom: VSMStyles.spacing.xs,
   },
   statLabel: {
-    color: VSMStyles.colors.white,
     fontSize: 12,
-    opacity: 0.9,
+    color: VSMStyles.colors.textMedium,
+    textAlign: 'center',
+  },
+  vsmDescription: {
+    fontSize: 14,
+    color: VSMStyles.colors.textMedium,
+    lineHeight: 20,
+    textAlign: 'center',
   },
   section: {
     marginTop: VSMStyles.spacing.xl,
@@ -467,57 +521,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: VSMStyles.spacing.lg,
     marginBottom: VSMStyles.spacing.md,
   },
-  sectionTitle: {
-    ...VSMStyles.typography.heading,
-    fontSize: 18,
-  },
   seeAllText: {
     color: VSMStyles.colors.primary,
     fontSize: 14,
     fontWeight: '600',
-  },
-  challengesContainer: {
-    paddingLeft: VSMStyles.spacing.lg,
-    paddingRight: VSMStyles.spacing.md,
-  },
-  challengeCard: {
-    width: screenWidth * 0.75,
-    height: 140,
-    marginRight: VSMStyles.spacing.md,
-    borderRadius: VSMStyles.borderRadius.lg,
-    overflow: 'hidden',
-    ...VSMStyles.shadows.medium,
-  },
-  challengeImage: {
-    flex: 1,
-  },
-  challengeImageStyle: {
-    borderRadius: VSMStyles.borderRadius.lg,
-  },
-  challengeOverlay: {
-    flex: 1,
-    padding: VSMStyles.spacing.md,
-  },
-  challengeContent: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  challengeIcon: {
-    alignSelf: 'flex-start',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    padding: VSMStyles.spacing.sm,
-    borderRadius: VSMStyles.borderRadius.default,
-  },
-  challengeTitle: {
-    color: VSMStyles.colors.white,
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginVertical: VSMStyles.spacing.xs,
-  },
-  challengeDescription: {
-    color: VSMStyles.colors.white,
-    fontSize: 12,
-    opacity: 0.9,
   },
   eventsList: {
     paddingHorizontal: VSMStyles.spacing.lg,
@@ -531,11 +538,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     ...VSMStyles.shadows.small,
   },
-  eventImage: {
-    width: 70,
-    height: 70,
+  eventImageContainer: {
+    width: 60,
+    height: 60,
     borderRadius: VSMStyles.borderRadius.default,
+    backgroundColor: VSMStyles.colors.background,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginRight: VSMStyles.spacing.md,
+  },
+  yearBadge: {
+    backgroundColor: VSMStyles.colors.primary,
+    paddingHorizontal: VSMStyles.spacing.sm,
+    paddingVertical: VSMStyles.spacing.xs,
+    borderRadius: VSMStyles.borderRadius.default,
+  },
+  yearText: {
+    color: VSMStyles.colors.white,
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   eventInfo: {
     flex: 1,
@@ -552,16 +573,19 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: VSMStyles.spacing.sm,
   },
-  categoryBadge: {
+  completedBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: VSMStyles.colors.background,
     paddingHorizontal: VSMStyles.spacing.sm,
     paddingVertical: 2,
     borderRadius: VSMStyles.borderRadius.sm,
   },
-  categoryText: {
+  completedText: {
     fontSize: 10,
     fontWeight: '600',
-    color: VSMStyles.colors.primary,
+    color: VSMStyles.colors.success,
+    marginLeft: 4,
   },
   eventDetails: {
     marginBottom: VSMStyles.spacing.sm,
@@ -576,19 +600,50 @@ const styles = StyleSheet.create({
     marginLeft: VSMStyles.spacing.xs,
     color: VSMStyles.colors.textLight,
   },
-  eventFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  participantsText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: VSMStyles.colors.primary,
+  },
+  communitySection: {
+    paddingHorizontal: VSMStyles.spacing.lg,
+    paddingTop: VSMStyles.spacing.xl,
+  },
+  communityCard: {
+    borderRadius: VSMStyles.borderRadius.xl,
+    overflow: 'hidden',
+    ...VSMStyles.shadows.medium,
+  },
+  communityGradient: {
+    padding: VSMStyles.spacing.xl,
     alignItems: 'center',
   },
-  eventPrice: {
-    fontSize: 16,
+  communityTitle: {
+    fontSize: 20,
     fontWeight: 'bold',
-    color: VSMStyles.colors.secondary,
+    color: VSMStyles.colors.white,
+    marginTop: VSMStyles.spacing.md,
+    marginBottom: VSMStyles.spacing.sm,
+    textAlign: 'center',
   },
-  eventParticipants: {
-    ...VSMStyles.typography.caption,
-    color: VSMStyles.colors.textLight,
+  communityDescription: {
+    fontSize: 14,
+    color: VSMStyles.colors.white,
+    opacity: 0.9,
+    textAlign: 'center',
+    marginBottom: VSMStyles.spacing.lg,
+    lineHeight: 20,
+  },
+  joinButton: {
+    backgroundColor: VSMStyles.colors.white,
+    paddingHorizontal: VSMStyles.spacing.xl,
+    paddingVertical: VSMStyles.spacing.md,
+    borderRadius: VSMStyles.borderRadius.lg,
+  },
+  joinButtonText: {
+    color: VSMStyles.colors.primary,
+    fontSize: 16,
+    fontWeight: '600',
   },
   bottomSpacing: {
     height: 100,
