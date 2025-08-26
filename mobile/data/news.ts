@@ -1,0 +1,42 @@
+import { News } from "@/types/types";
+
+export const news: News[] = [
+  {
+    id: "n1",
+    title: "Marathon Hà Nội 2025 công bố lộ trình chính thức",
+    summary: "Ban tổ chức công bố lộ trình mới đi qua các địa danh nổi tiếng của thủ đô, hứa hẹn mang đến trải nghiệm tuyệt vời cho vận động viên.",
+    content: "Nội dung chi tiết về lộ trình và các thông tin liên quan...",
+    coverImageUrl: "https://images.unsplash.com/photo-1593642532973-d31b6557fa68?w=400",
+    status: "published",
+    overview: 1523,
+    createdByUserId: "admin",
+    publishedAt: new Date("2024-12-05T08:00:00"),
+    createdAt: new Date("2024-12-01T08:00:00"),
+    updatedAt: new Date("2024-12-05T10:00:00"),
+  },
+  {
+    id: "n2",
+    title: "Top 5 mẹo giúp cải thiện pace khi chạy đường dài",
+    summary: "Áp dụng các mẹo này để cải thiện tốc độ và duy trì sức bền tốt hơn trong các buổi chạy đường dài.",
+    content: "Nội dung chi tiết về kỹ thuật, chế độ dinh dưỡng, nghỉ ngơi...",
+    coverImageUrl: "https://images.unsplash.com/photo-1593642532973-d31b6557fa68?w=400",
+    status: "published",
+    overview: 987,
+    createdByUserId: "editor1",
+    publishedAt: new Date("2024-12-03T09:30:00"),
+    createdAt: new Date("2024-12-02T10:00:00"),
+    updatedAt: new Date("2024-12-03T11:00:00"),
+  },
+  {
+    id: "n3",
+    title: "Khai mạc giải chạy Fun Run 2025 dành cho gia đình",
+    summary: "Sự kiện chạy bộ vui nhộn dành cho mọi lứa tuổi, khuyến khích gia đình cùng tham gia vận động.",
+    content: "Thông tin chi tiết về thời gian, địa điểm và cách đăng ký...",
+    coverImageUrl: "https://images.unsplash.com/photo-1544654803-b69140b285a1?w=800",
+    status: "published",
+    overview: 742,
+    createdByUserId: "editor2",
+    publishedAt: new Date("2024-12-07T07:00:00"),
+    createdAt: new Date("2024-12-05T13:00:00"),
+  },
+];
