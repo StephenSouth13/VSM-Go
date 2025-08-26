@@ -38,7 +38,9 @@ export default function HomeScreen() {
   ];
 
   return (
-    <View className={`flex-1 ${isDark ? "bg-neutral-900" : "bg-neutral-50"}`}>
+    <View
+      className={`flex-1 ${isDark ? "bg-neutral-900" : "bg-neutral-50"} mb-14`}
+    >
       <StatusBar style="light" />
 
       {/* Header with Gradient - Collapsible */}

@@ -118,7 +118,7 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="news"
+        name="challenges"
         options={{
           title: "Thử thách",
           tabBarIcon: ({ color, focused }) => (
