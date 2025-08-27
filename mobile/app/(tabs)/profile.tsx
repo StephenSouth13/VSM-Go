@@ -126,10 +126,7 @@ export default function ProfileScreen() {
       showsVerticalScrollIndicator={false}
     >
       {/* Header Section */}
-      <LinearGradient
-        colors={["#1e3a8a", "#3b82f6"]}
-        className="px-6 pt-16 pb-8"
-      >
+      <LinearGradient colors={["#1e3a8a", "#3b82f6"]} className="px-6 pt-16">
         <View className="items-center">
           {/* Avatar */}
           <View className="relative mb-4">
@@ -310,7 +307,7 @@ export default function ProfileScreen() {
       </View>
 
       {/* Logout Button */}
-      <View className="px-6 pb-8 mb-16">
+      <View className="px-6 pb-8">
         <Pressable
           onPress={handleLogout}
           className="bg-error-500 rounded-2xl p-4 flex-row items-center justify-center active:opacity-90"

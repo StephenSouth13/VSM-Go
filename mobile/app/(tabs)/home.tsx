@@ -38,9 +38,7 @@ export default function HomeScreen() {
   ];
 
   return (
-    <View
-      className={`flex-1 ${isDark ? "bg-neutral-900" : "bg-neutral-50"} mb-14`}
-    >
+    <View className={`flex-1 ${isDark ? "bg-neutral-900" : "bg-neutral-50"}`}>
       <StatusBar style="light" />
 
       {/* Header with Gradient - Collapsible */}
@@ -53,7 +51,7 @@ export default function HomeScreen() {
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
           { useNativeDriver: false }
         )}
-        scrollEventThrottle={16}
+        scrollEventThrottle={16} // tốc độ cuộn
       >
         {/* Activities Section */}
         <ActivitysSection activities={activities} />

@@ -1,6 +1,7 @@
 // Home Components Export
 
 export { HomeHeader } from './HomeHeader';
+export { Header } from '../layout/Header';
 export { ActivitysSection } from './ActivitysSection';
 export { QuickStats } from './QuickStats';
 export { FriendsActivity } from './FriendsActivity';

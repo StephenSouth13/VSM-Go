@@ -18,11 +18,13 @@ export default function TabsLayout() {
           backgroundColor: isDark ? Colors.neutral[800] : Colors.primary[600],
           borderTopWidth: 0,
           height: 72, // Chiều cao của tab bar
-          position: "absolute",
-          left: 16,
-          right: 16,
-          bottom: 0, // Khoảng cách từ tab bar đến màn hình
-          borderRadius: 24,
+          // position: "absolute",
+          // left: 16,
+          // right: 16,
+          bottom: 0,
+          // borderRadius: 8,
+          borderTopLeftRadius: 10, // Góc trên bên trái
+          borderTopRightRadius: 10, // Góc trên bên phải
           paddingBottom: 8,
           paddingTop: 8,
           shadowColor: "#000",
